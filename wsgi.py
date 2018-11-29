@@ -9,7 +9,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow # Order is important here!
 
 
-logging.warn(os.environ["DUMMY"])
+
 
 app = Flask(__name__)
 
