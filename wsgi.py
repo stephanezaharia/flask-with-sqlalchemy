@@ -19,6 +19,15 @@ ma = Marshmallow(app)
 db = SQLAlchemy(app)
 from models import Product
 from schemas import products_schema,product_schema
+from flask_admin.contrib.sqla import ModelView
+from models import Product, Category
+from flask_admin import Admin
+
+# [...] Flask `app` and `db` creation
+app.secret_key='Nice secret key'
+admin = Admin(app, name='Back-office', template_mode='bootstrap3')
+admin.add_view(ModelView(Product, db.session)) # `Product` needs to be imported before
+admin.add_view(ModelView(Category, db.session)) # `Product` needs to be imported before
 
 @app.route('/')
 def main():
