@@ -1,7 +1,7 @@
 # wsgi.py
 import os
 import logging
-from flask import Flask,request,jsonify
+from flask import Flask,request,jsonify,render_template
 from config import Config
 
 from flask_sqlalchemy import SQLAlchemy
@@ -20,8 +20,17 @@ db = SQLAlchemy(app)
 from models import Product
 from schemas import products_schema,product_schema
 
+@app.route('/')
+def main():
+    # Use this in the home route
+    products = db.session.query(Product).all()
+    return render_template('home.html', title="Products",products=products)
 
-
+@app.route('/details/<int:id>')
+def details(id):
+    # Use this in the home route
+    product = db.session.query(Product).get(id)
+    return render_template('details.html', title="Product detail",product=product)
 
 @app.route('/hello')
 def hello():
